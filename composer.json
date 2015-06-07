@@ -1,0 +1,22 @@
+{
+    "name": "bolstad/analytrix",
+    "description": "jump start kit for Google Analytics-based web apps",
+    "require": {
+        "php": ">=5.3.0",
+        "timgws/google-analytics-api": "dev-master",
+        "vlucas/phpdotenv": "2.0.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Analytrix": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Bolstad",
+            "email": "christian@bolstad.se"
+        }
+    ],
+    "minimum-stability": "dev"
+}

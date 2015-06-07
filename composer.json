@@ -3,8 +3,8 @@
     "description": "jump start kit for Google Analytics-based web apps",
     "require": {
         "php": ">=5.3.0",
-        "timgws/google-analytics-api": "dev-master",
-        "vlucas/phpdotenv": "dev-master"
+        "timgws/google-analytics-api": "*",
+        "vlucas/phpdotenv": "*"
     },
     "autoload": {
         "psr-0": {

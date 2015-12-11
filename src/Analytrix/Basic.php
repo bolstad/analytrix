@@ -12,6 +12,14 @@ class Basic {
 
     function __construct( $configDir ) {
 
+        if (!isset( $configDir)) {
+            throw new \Exception('You need to set $configdir');
+        }
+
+        if (!is_dir( $configDir )) {
+            throw new \Exception("The directory defined in configDir does not exist '$configDir'");
+        }
+
         // Setup Dotenv 
         $this->dotenv = new \Dotenv\Dotenv( $configDir );
         $this->dotenv->load();

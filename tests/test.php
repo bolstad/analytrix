@@ -30,16 +30,15 @@ class NachoTest extends PHPUnit_Framework_TestCase {
     public function testDebugMode()
     {
         $test = new Analytrix\Basic($this->stub, new Analytics);
-        $test->DebugMode = true;
+        $test->DebugMode = false;
         $test->run();
     }
 
     public function testDebugModeOff()
     {
         $test = new Analytrix\Basic($this->stub, new Analytics);
-        $test->DebugMode = true;
+        $test->DebugMode = false;
         $test->run();
-        echo "hello";
     }
 
 

@@ -24,6 +24,32 @@ $ding->run();
 
 $auth = $ding->storage->get('auth');
 
+function getVisits( $ding, $profile ) {
+
+    echo "profil: $profile\n";
+
+    $ding->ga->setAccountId( "ga:".$profile );
+
+    // Set the default params. For example the start/end dates and max-results
+    $defaults = array(
+        'start-date' => date( 'Y-m-d', strtotime( '-1 month' ) ),
+        'end-date' => date( 'Y-m-d' ),
+    );
+    $ding->ga->setDefaultQueryParams( $defaults );
+
+    // Example1: Get visits by date
+    $params = array(
+        'metrics' => 'ga:visits',
+        'dimensions' => 'ga:date',
+    );
+    $visits = $ding->ga->query( $params );
+
+    echo '<pre>';
+    print_r( $visits );
+    echo '</pre>';
+    die;
+}
+
 if ( $auth = $ding->storage->get('auth') ) {
 
     $accessToken = $auth['access_token'];
@@ -32,7 +58,36 @@ if ( $auth = $ding->storage->get('auth') ) {
     $ding->ga->setAccessToken( $accessToken );
     $ding->ga->setAccountId( $ACCOUNT_ID );
 
-   
+    // Load profiles
+    $profiles = $ding->ga->getProfiles();
+#    print_r($profiles);
+    $accounts = array();
+    foreach ($profiles['items'] as $item) {
+        $id = "ga:{$item['id']}";
+        $name = $item['name'];
+        $accounts[$id] = $name;
+        echo "---\n $name\n";
+        getVisits($ding, $item['id']);
+
+    }
+
+    #print_r($accounts);
+die;
+
+    try {
+        $profiles = $ding->ga->management_profiles
+            ->listManagementProfiles('123456', 'UA-123456-1');
+
+    } catch (apiServiceException $e) {
+        print 'There was an Analytics API service error '
+            . $e->getCode() . ':' . $e->getMessage();
+
+    } catch (apiException $e) {
+        print 'There was a general API error '
+            . $e->getCode() . ':' . $e->getMessage();
+    }
+
+
 }
 
 

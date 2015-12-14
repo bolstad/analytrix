@@ -15,7 +15,7 @@ session_start();
 
 include 'vendor/autoload.php';
 
-$ding = new Analytrix\Basic(__DIR__);
+$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__), new \timgws\GoogleAnalytics\API);
 
 $ACCOUNT_ID =  'ga:123456-7';
 

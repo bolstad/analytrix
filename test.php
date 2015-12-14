@@ -5,7 +5,7 @@ session_start();
 
 include 'vendor/autoload.php';
 
-$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__), new \timgws\GoogleAnalytics\API, new Analytrix\SessionStorageFile);
+$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__), new \timgws\GoogleAnalytics\API, new Analytrix\SessionStoragePhpSession);
 
 $ding->storage->setBucket('christian@carnaby.se');
 $ACCOUNT_ID =  getenv( 'ACCOUNT_ID' );
@@ -16,13 +16,13 @@ $ding->DieOnNoSession = true;
 
 $ding->run();
 
+$auth = $ding->storage->get('auth');
 
-if ( isset( $_SESSION['auth'] ) ) {
+if ( $auth = $ding->storage->get('auth') ) {
 
     echo "yes, session is set\n";
-    print_r( $_SESSION['auth'] );
 
-    $auth = $_SESSION['auth'];
+    print_r( $auth );
 
     $accessToken = $auth['access_token'];
     $tokenExpires = $auth['expires_in'];

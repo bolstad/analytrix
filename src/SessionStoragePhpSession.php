@@ -15,7 +15,6 @@ class SessionStoragePhpSession implements SessionStorageInterface
     public function __construct()
     {
 #        session_start();
-
     }
 
     public function setBucket($bucketName)
@@ -26,19 +25,14 @@ class SessionStoragePhpSession implements SessionStorageInterface
 
     public function get($key)
     {
-        // TODO: Implement __get() method.
         if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        }
-        else
-        {
-            return false;
+            $data = $_SESSION[$key];
+            return $data;
         }
     }
 
     public function set($key, $value)
     {
-        // TODO: Implement __set() method.
         $_SESSION[$key] = $value;
     }
 }

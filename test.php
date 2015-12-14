@@ -5,7 +5,7 @@ session_start();
 
 include 'vendor/autoload.php';
 
-$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__), new \timgws\GoogleAnalytics\API, new Analytrix\SessionStoragePhpSession);
+$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__), new \timgws\GoogleAnalytics\API, new Analytrix\SessionStorageFile);
 
 $ding->storage->setBucket('christian@carnaby.se');
 $ACCOUNT_ID =  getenv( 'ACCOUNT_ID' );
@@ -20,7 +20,7 @@ $auth = $ding->storage->get('auth');
 
 if ( $auth = $ding->storage->get('auth') ) {
 
-    echo "yes, session is set\n";
+    echo "Yes, session is set\n";
 
     print_r( $auth );
 
@@ -29,7 +29,6 @@ if ( $auth = $ding->storage->get('auth') ) {
 
     $ding->ga->setAccessToken( $accessToken );
     $ding->ga->setAccountId( $ACCOUNT_ID );
-
 
     // Set the default params. For example the start/end dates and max-results
     $defaults = array(

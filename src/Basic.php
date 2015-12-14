@@ -68,12 +68,18 @@ class Basic {
             $auth = $this->ga->auth->getAccessToken( $code );
 
             if ( $auth['http_code'] == 200 ) {
+                echo '<pre>';
+                var_dump($auth);
+                echo '</pre>';
                 $accessToken = $auth['access_token'];
                 $refreshToken = $auth['refresh_token'];
                 $tokenExpires = $auth['expires_in'];
                 $tokenCreated = time();
 #                $_SESSION['auth'] = $auth;
                 $this->storage->set('auth',$auth);
+                $this->storage->set('refreshToken',$refreshToken);
+                $this->storage->set('tokenExpires',$tokenExpires);
+                $this->storage->set('tokenCreated',$tokenCreated);
             }
         }
 
@@ -85,6 +91,35 @@ class Basic {
             }
             return false;
         } else {
+
+                    $refreshToken = $this->storage->get( 'refreshToken' );
+                    $tokenExpires = $this->storage->get( 'tokenExpires' );
+                    $tokenCreated = $this->storage->get( 'tokenCreated' );
+
+                    echo "refreshtoken '" . var_dump($refreshToken) ."'\n<br>";
+                    echo "tokenExpires '" . var_dump($tokenExpires) . "'\n<br>";
+                    echo "tokenCreated '" . var_dump($tokenCreated) . "'\n<br>";
+
+            // Check if the accessToken is expired
+                    if ((time() - $tokenCreated) >= $tokenExpires) {
+
+                        echo "it ahz expired\n";
+
+                        // update token data
+                        $auth = $ga->auth->refreshAccessToken($refreshToken);
+                        $accessToken = $auth['access_token'];
+                        $refreshToken = $auth['refresh_token'];
+                        $tokenExpires = $auth['expires_in'];
+                        $tokenCreated = time();
+                        $this->storage->set('auth',$auth);
+                        $this->storage->set('refreshToken',$refreshToken);
+                        $this->storage->set('tokenExpires',$tokenExpires);
+                        $this->storage->set('tokenCreated',$tokenCreated);
+
+
+                    }
+
+
             return true;
         }
     }

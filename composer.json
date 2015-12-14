@@ -11,7 +11,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Analytrix\\": "src"
+            "Analytrix\\": "src",
+            "Analytrix\\Parser\\": "src"
+
         }
     },
 

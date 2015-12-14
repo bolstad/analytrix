@@ -40,12 +40,17 @@ function getVisits( $ding, $profile ) {
     // Example1: Get visits by date
     $params = array(
         'metrics' => 'ga:visits',
-        'dimensions' => 'ga:date',
+        'dimensions' => 'ga:hostname',
     );
     $visits = $ding->ga->query( $params );
 
     echo '<pre>';
     print_r( $visits );
+
+    $data = json_encode( $visits, 1);
+
+    echo $data;
+    file_put_contents('data.json',$data);
     echo '</pre>';
     die;
 }

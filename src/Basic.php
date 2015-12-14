@@ -13,14 +13,15 @@ class Basic {
 
     private $data = array();
 
-    function __construct( $dotenv = \Dotenv\Dotenv )
+    function __construct( $dotenv =  \Dotenv\Dotenv, $ga = Analytics )
     {
         $this->dotenv = $dotenv;
+        $this->ga = $ga;
         $this->dotenv->load();
         $this->dotenv->required(array('CLIENT_ID', 'CLIENT_SECRET', 'REDIRECT_URI'));
 
         $this->data['LoginText'] = 'login here';
-        $this->data['DieOnNoSession'] = true;
+        $this->data['DieOnNoSession'] = false;
         $this->data['DebugMode'] = false;
     }
 
@@ -53,9 +54,8 @@ class Basic {
     }
 
     function run() {
-        // Setup GA 
-        $this->ga = new Analytics();
-        $this->ga->auth->setClientId( getenv( 'CLIENT_ID' ) );  
+
+        $this->ga->auth->setClientId( getenv( 'CLIENT_ID' ) );
         $this->ga->auth->setClientSecret( getenv( 'CLIENT_SECRET' ) );  
         $this->ga->auth->setRedirectUri( getenv( 'REDIRECT_URI' ) );  
 

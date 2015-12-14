@@ -10,7 +10,11 @@ $ding = new Analytrix\Basic(__DIR__);
 $ACCOUNT_ID =  getenv( 'ACCOUNT_ID' );
 echo "ACCOUNT_ID: $ACCOUNT_ID\n";
 
+$ding->LoginText = 'Please login here';
+$ding->DieOnNoSession = true;
+
 $ding->run();
+
 
 if ( isset( $_SESSION['auth'] ) ) {
 

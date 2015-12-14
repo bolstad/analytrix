@@ -24,7 +24,13 @@ $ding->run();
 
 $auth = $ding->storage->get('auth');
 
+
+$headerData = new Analytrix\ParserHeader();
+
+
 function getVisits( $ding, $profile ) {
+
+    global $headerData;
 
     echo "profil: $profile\n";
 
@@ -44,15 +50,13 @@ function getVisits( $ding, $profile ) {
     );
     $visits = $ding->ga->query( $params );
 
-    echo '<pre>';
-    print_r( $visits );
-
     $data = json_encode( $visits, 1);
 
-    echo $data;
     file_put_contents('data.json',$data);
-    echo '</pre>';
-    die;
+
+    $parsed = $headerData->getColumns( $visits );
+
+    print_r($parsed);
 }
 
 if ( $auth = $ding->storage->get('auth') ) {

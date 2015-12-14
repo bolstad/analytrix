@@ -30,6 +30,9 @@ class ParserHeader
 
   #    var_dump($header_names);
 
+      if (!isset($data['rows']))
+          return;
+      
       foreach ($data['rows'] as $row) {
 
  #         var_dump($row);

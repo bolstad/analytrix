@@ -1,7 +1,7 @@
 <?php 
 
-#namespace Analytrix;
-namespace PhilipBrown\Nacho;
+
+namespace Analytrix;
 
 use timgws\GoogleAnalytics\API as Analytics;
 

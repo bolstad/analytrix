@@ -4,3 +4,4 @@ tests/.env
 .idea
 .env
 .*.storage
+data.json

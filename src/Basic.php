@@ -11,21 +11,24 @@ class Basic {
     var $dotenv;
     var $ga;
 
-    function __construct( $configDir ) {
+    function __construct( $configDir )
+    {
 
-        if (!isset( $configDir)) {
+        if (!isset($configDir)) {
             throw new \Exception('You need to set $configdir');
         }
 
-        if (!is_dir( $configDir )) {
+        if (!is_dir($configDir)) {
             throw new \Exception("The directory defined in configDir does not exist '$configDir'");
         }
 
         // Setup Dotenv 
-        $this->dotenv = new \Dotenv\Dotenv( $configDir );
+        $this->dotenv = new \Dotenv\Dotenv($configDir);
         $this->dotenv->load();
-        $this->dotenv->required( array( 'CLIENT_ID', 'CLIENT_SECRET', 'REDIRECT_URI' ) );
+        $this->dotenv->required(array('CLIENT_ID', 'CLIENT_SECRET', 'REDIRECT_URI'));
+    }
 
+    function run() {
         // Setup GA 
         $this->ga = new Analytics();
         $this->ga->auth->setClientId( getenv( 'CLIENT_ID' ) );  

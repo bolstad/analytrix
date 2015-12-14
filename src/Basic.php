@@ -10,13 +10,16 @@ class Basic {
 
     var $dotenv;
     var $ga;
+    var $storage;
 
     private $data = array();
 
-    function __construct( $dotenv =  \Dotenv\Dotenv, $ga = Analytics )
+    function __construct( $dotenv =  \Dotenv\Dotenv, $ga = Analytics, $storage )
     {
         $this->dotenv = $dotenv;
         $this->ga = $ga;
+        $this->storage = $storage;
+
         $this->dotenv->load();
         $this->dotenv->required(array('CLIENT_ID', 'CLIENT_SECRET', 'REDIRECT_URI'));
 

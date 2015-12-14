@@ -12,3 +12,13 @@ use Analytrix\ParserHeader;
 
 
 $headerData = new Analytrix\ParserHeader();
+
+$data = json_decode(file_get_contents('data.json'),1);
+
+#print_r($data);
+
+$parsed = $headerData->getColumns( $data );
+
+print_r($parsed);
+
+

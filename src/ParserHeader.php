@@ -12,27 +12,42 @@ namespace Analytrix;
 class ParserHeader
 {
 
-    public function __construct()
-    {
-#        session_start();
-    }
+  public function getColumns( $data )
+  {
+      $header_names = array();
+#      print_r($data);
 
-    public function setBucket($bucketName)
-    {
-        // TODO: Implement setBucket() method.
+      $columns = array();
 
-    }
+#      print_r($data->columnHeaders);
+ #     die;
 
-    public function get($key)
-    {
-        if (isset($_SESSION[$key])) {
-            $data = $_SESSION[$key];
-            return $data;
-        }
-    }
+      foreach( $data['columnHeaders'] as $column ) {
+          #echo "$column\n";
+          $header_names[] = $column['name'];
+#          var_dump($column);
+      }
 
-    public function set($key, $value)
-    {
-        $_SESSION[$key] = $value;
-    }
+  #    var_dump($header_names);
+
+      foreach ($data['rows'] as $row) {
+
+ #         var_dump($row);
+          $count = 0;
+          $newRow = array();
+          foreach($row as $entry) {
+#                var_dump($entry);
+
+                $newEntry[$header_names[$count]] = $entry;
+                $count++;
+          }
+
+#          print_r($newEntry);
+          $columns[] = $newEntry;
+      }
+
+      return $columns;
+  }
+
+
 }

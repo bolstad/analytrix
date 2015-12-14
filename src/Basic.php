@@ -72,11 +72,12 @@ class Basic {
                 $refreshToken = $auth['refresh_token'];
                 $tokenExpires = $auth['expires_in'];
                 $tokenCreated = time();
-                $_SESSION['auth'] = $auth;
+#                $_SESSION['auth'] = $auth;
+                $this->storage->set('auth',$auth);
             }
         }
 
-        if ( !isset( $_SESSION['auth'] ) ) {
+        if ( empty($this->storage->get('auth'))  ) {
             $url = $this->ga->auth->buildAuthUrl();
             echo '<a href="'. $url . '">'. $this->LoginText . '</a>';
             if ($this->DieOnNoSession) {

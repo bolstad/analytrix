@@ -11,18 +11,34 @@ namespace Analytrix;
 
 class SessionStoragePhpSession implements SessionStorageInterface
 {
+
+    public function __construct()
+    {
+#        session_start();
+
+    }
+
     public function setBucket($bucketName)
     {
         // TODO: Implement setBucket() method.
+
     }
 
-    public function __get($key)
+    public function get($key)
     {
         // TODO: Implement __get() method.
+        if (isset($_SESSION[$key])) {
+            return $_SESSION[$key];
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public function __set($key, $value)
+    public function set($key, $value)
     {
         // TODO: Implement __set() method.
+        $_SESSION[$key] = $value;
     }
 }

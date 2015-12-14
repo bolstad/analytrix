@@ -10,14 +10,14 @@ Rest on the shoulder of the gigants: __timgws/google-analytics-api__ and __vluca
 ```php
 <?php
 
-$ACCOUNT_ID = 'ga:1234567' ## <--- CHANGE THIS!!! 
-
 date_default_timezone_set( 'Europe/Stockholm' );
 session_start();
 
 include 'vendor/autoload.php';
 
-$ding = new Basic;
+$ding = new Analytrix\Basic(__DIR__);
+
+$ACCOUNT_ID =  'ga:123456-7';
 
 if ( isset( $_SESSION['auth'] ) ) {
 

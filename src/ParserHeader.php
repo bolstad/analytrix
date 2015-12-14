@@ -32,7 +32,7 @@ class ParserHeader
 
       if (!isset($data['rows']))
           return;
-      
+
       foreach ($data['rows'] as $row) {
 
  #         var_dump($row);

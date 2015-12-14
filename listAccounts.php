@@ -54,9 +54,11 @@ function getVisits( $ding, $profile ) {
 
     file_put_contents('data.json',$data);
 
-    $parsed = $headerData->getColumns( $visits );
+    if ($parsed = $headerData->getColumns( $visits ) ) {
+        print_r($parsed);
 
-    print_r($parsed);
+    }
+
 }
 
 if ( $auth = $ding->storage->get('auth') ) {

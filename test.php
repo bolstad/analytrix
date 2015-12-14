@@ -5,7 +5,9 @@ session_start();
 
 include 'vendor/autoload.php';
 
-$ding = new Analytrix\Basic( __DIR__);
+use PhilipBrown\Nacho\Basic;
+
+$ding = new Basic(__DIR__);
 
 
 $ACCOUNT_ID =  getenv( 'ACCOUNT_ID' );

@@ -6,11 +6,15 @@
         "timgws/google-analytics-api": "*",
         "vlucas/phpdotenv": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
     "autoload": {
-        "psr-0": {
-            "Analytrix": "src/"
+        "psr-4": {
+            "PhilipBrown\\Nacho\\": "src"
         }
     },
+
     "license": "MIT",
     "authors": [
         {

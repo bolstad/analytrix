@@ -13,27 +13,15 @@ class Basic {
 
     private $data = array();
 
-    function __construct( $configDir )
+    function __construct( $dotenv = \Dotenv\Dotenv )
     {
-
-        if (!isset($configDir)) {
-            throw new \Exception('You need to set $configdir');
-        }
-
-        if (!is_dir($configDir)) {
-            throw new \Exception("The directory defined in configDir does not exist '$configDir'");
-        }
-
-        // Setup Dotenv 
-        $this->dotenv = new \Dotenv\Dotenv($configDir);
+        $this->dotenv = $dotenv;
         $this->dotenv->load();
         $this->dotenv->required(array('CLIENT_ID', 'CLIENT_SECRET', 'REDIRECT_URI'));
 
         $this->data['LoginText'] = 'login here';
         $this->data['DieOnNoSession'] = true;
         $this->data['DebugMode'] = false;
-
-
     }
 
 

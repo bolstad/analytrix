@@ -5,7 +5,7 @@ session_start();
 
 include 'vendor/autoload.php';
 
-$ding = new Analytrix\Basic(__DIR__);
+$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__));
 
 $ACCOUNT_ID =  getenv( 'ACCOUNT_ID' );
 echo "ACCOUNT_ID: $ACCOUNT_ID\n";

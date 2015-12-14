@@ -8,7 +8,7 @@ include 'vendor/autoload.php';
 $ding = new Analytrix\Basic(__DIR__);
 
 $ACCOUNT_ID =  getenv( 'ACCOUNT_ID' );
-echo "kontoid: $ACCOUNT_ID\n";
+echo "ACCOUNT_ID: $ACCOUNT_ID\n";
 
 
 if ( isset( $_SESSION['auth'] ) ) {

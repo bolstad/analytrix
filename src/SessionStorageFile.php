@@ -32,6 +32,7 @@ class SessionStorageFile implements SessionStorageInterface
     function get($key)
     {
         if (isset( $this->data[$key])) {
+#            echo "get: '$key' val: '". $this->data[$key]. "'\n";
             return $this->data[$key];
         } else {
             return;
@@ -45,5 +46,10 @@ class SessionStorageFile implements SessionStorageInterface
         $this->data[$key] = $value;
         file_put_contents($this->fullPath,json_encode($this->data));
 
+    }
+
+
+    function get_all() {
+        return $this->data;
     }
 }

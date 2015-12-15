@@ -32,7 +32,7 @@ function getVisits( $ding, $profile ) {
 
     global $headerData;
 
-    echo "profil: $profile\n";
+#    echo "profil: $profile\n";
 
     $ding->ga->setAccountId( "ga:".$profile );
 
@@ -57,6 +57,12 @@ function getVisits( $ding, $profile ) {
     if ($parsed = $headerData->getColumns( $visits ) ) {
         print_r($parsed);
 
+        foreach($parsed as $entry) {
+            $hostname = $entry['ga:hostname'];
+            echo "$hostname\n";
+            file_put_contents("hostnames.txt", $hostname . "\n", FILE_APPEND);
+
+        }
     }
 
 }
@@ -73,11 +79,25 @@ if ( $auth = $ding->storage->get('auth') ) {
     $profiles = $ding->ga->getProfiles();
 #    print_r($profiles);
     $accounts = array();
+    $oldAccountId = '';
+    $ccounter = 0;
     foreach ($profiles['items'] as $item) {
+        #print_r($item);
+
+        $accountId = $item['accountId'];
+        if ($accountId != $oldAccountId)
+        {
+            echo "new: $accountId '$oldAccountId'\n";
+            #die;
+            file_put_contents("hostnames.txt", $hostname . "\n", FILE_APPEND);
+            $oldAccountId = $accountId;
+            $ccounter++;
+        }
+        echo "old: $oldAccountId new $accountId $ccounter\n";
         $id = "ga:{$item['id']}";
         $name = $item['name'];
         $accounts[$id] = $name;
-        echo "---\n $name\n";
+     #   echo "---\n $name\n";
         getVisits($ding, $item['id']);
 
     }
@@ -85,18 +105,6 @@ if ( $auth = $ding->storage->get('auth') ) {
     #print_r($accounts);
 die;
 
-    try {
-        $profiles = $ding->ga->management_profiles
-            ->listManagementProfiles('123456', 'UA-123456-1');
-
-    } catch (apiServiceException $e) {
-        print 'There was an Analytics API service error '
-            . $e->getCode() . ':' . $e->getMessage();
-
-    } catch (apiException $e) {
-        print 'There was a general API error '
-            . $e->getCode() . ':' . $e->getMessage();
-    }
 
 
 }

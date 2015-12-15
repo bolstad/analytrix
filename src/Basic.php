@@ -106,7 +106,7 @@ class Basic {
                         echo "it ahz expired\n";
 
                         // update token data
-                        $auth = $ga->auth->refreshAccessToken($refreshToken);
+                        $auth = $this->ga->auth->refreshAccessToken($refreshToken);
                         $accessToken = $auth['access_token'];
                         $refreshToken = $auth['refresh_token'];
                         $tokenExpires = $auth['expires_in'];

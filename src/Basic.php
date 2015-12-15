@@ -91,34 +91,40 @@ class Basic {
             }
             return false;
         } else {
-
+                    var_dump($auth);
                     $refreshToken = $this->storage->get( 'refreshToken' );
                     $tokenExpires = $this->storage->get( 'tokenExpires' );
                     $tokenCreated = $this->storage->get( 'tokenCreated' );
 
-                    echo "refreshtoken '" . var_dump($refreshToken) ."'\n<br>";
-                    echo "tokenExpires '" . var_dump($tokenExpires) . "'\n<br>";
-                    echo "tokenCreated '" . var_dump($tokenCreated) . "'\n<br>";
+
+                    $all_data = $this->storage->get_all();
+
+                    var_dump($all_data);
+                    echo "refreshtoken '" . $refreshToken ."'\n<br>";
+                    echo "tokenExpires '" . $tokenExpires. "'\n<br>";
+                    echo "tokenCreated '" . $tokenCreated . "'\n<br>";
 
             // Check if the accessToken is expired
-                    if ((time() - $tokenCreated) >= $tokenExpires) {
+                    if ((time() - $tokenCreated) >= $tokenExpires)
+                    {
 
                         echo "it ahz expired\n";
 
                         // update token data
                         $auth = $this->ga->auth->refreshAccessToken($refreshToken);
+                        var_dump($auth);
                         $accessToken = $auth['access_token'];
                         $refreshToken = $auth['refresh_token'];
                         $tokenExpires = $auth['expires_in'];
                         $tokenCreated = time();
                         $this->storage->set('auth',$auth);
-                        $this->storage->set('refreshToken',$refreshToken);
+#                        $this->storage->set('refreshToken',$refreshToken);
                         $this->storage->set('tokenExpires',$tokenExpires);
                         $this->storage->set('tokenCreated',$tokenCreated);
 
 
                     }
-
+#            die;
 
             return true;
         }

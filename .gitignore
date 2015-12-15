@@ -5,3 +5,6 @@ tests/.env
 .env
 .*.storage
 data.json
+.DS_Store
+hostnames.txt
+

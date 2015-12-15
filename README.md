@@ -8,30 +8,35 @@ Rest on the shoulder of the gigants: __timgws/google-analytics-api__ and __vluca
 ## Code Example
 
 ```php
-<?php
-
 date_default_timezone_set( 'Europe/Stockholm' );
 session_start();
 
 include 'vendor/autoload.php';
 
-$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__), new \timgws\GoogleAnalytics\API);
+$ding = new Analytrix\Basic(  new \Dotenv\Dotenv(__DIR__), new \timgws\GoogleAnalytics\API, new Analytrix\SessionStorageFile);
 
-$ACCOUNT_ID =  'ga:123456-7';
+$ding->storage->setBucket('bucket name');
+$ACCOUNT_ID = 'ga:123456-1';
+echo "ACCOUNT_ID: $ACCOUNT_ID\n";
 
-if ( isset( $_SESSION['auth'] ) ) {
+$ding->LoginText = 'Please login here';
+$ding->DieOnNoSession = true;
 
-    echo "yes, session is set\n";
-    print_r( $_SESSION['auth'] );
+$ding->run();
 
-    $auth = $_SESSION['auth'];
+$auth = $ding->storage->get('auth');
+
+if ( $auth = $ding->storage->get('auth') ) {
+
+    echo "Yes, session is set\n";
+
+    print_r( $auth );
 
     $accessToken = $auth['access_token'];
     $tokenExpires = $auth['expires_in'];
 
     $ding->ga->setAccessToken( $accessToken );
     $ding->ga->setAccountId( $ACCOUNT_ID );
-
 
     // Set the default params. For example the start/end dates and max-results
     $defaults = array(
@@ -53,7 +58,6 @@ if ( isset( $_SESSION['auth'] ) ) {
     die;
 }
 
-?>
 
 ```
 

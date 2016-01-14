@@ -12,45 +12,75 @@ namespace Analytrix;
 class ParserHeader
 {
 
-  public function getColumns( $data )
+  /**
+   * Return all column headers 
+   * 
+   * @param  array $data Data array returned from Google Analytics
+   * @return array       List of column labels
+   */
+  public function getColumnNames( $data ) 
+  {
+      foreach( $data['columnHeaders'] as $column ) {
+          $header_names[] = $column['name'];
+      }
+      return $header_names;
+  }
+
+ /**
+  * Return all column headers with the date label removed 
+  * 
+  * @param  array $data Data array returned from Google Analytics
+  * @return array       List of column labels
+  */
+ public function getColumnNamesWithoutDate( $data ) 
+ {
+    $headers = $this->getColumnNames( $data );
+    $reduced = array_diff( $headers, array('ga:date') );
+    return $reduced;
+ } 
+
+ public function getColumns( $data )
   {
       $header_names = array();
-#      print_r($data);
-
       $columns = array();
 
-#      print_r($data->columnHeaders);
- #     die;
-
       foreach( $data['columnHeaders'] as $column ) {
-          #echo "$column\n";
           $header_names[] = $column['name'];
-#          var_dump($column);
       }
-
-  #    var_dump($header_names);
 
       if (!isset($data['rows']))
           return;
 
       foreach ($data['rows'] as $row) {
 
- #         var_dump($row);
           $count = 0;
           $newRow = array();
           foreach($row as $entry) {
-#                var_dump($entry);
-
                 $newEntry[$header_names[$count]] = $entry;
                 $count++;
           }
 
-#          print_r($newEntry);
           $columns[] = $newEntry;
       }
 
       return $columns;
   }
 
+   public function getColumnAsArray( $columnName, $data )
+   {
+       $parsed = $this->getColumns($data);
+
+       $found = array();
+
+       foreach( $parsed as $item ) {
+           if (isset($item[$columnName]))
+           {
+               $found[] = $item[$columnName];
+           }
+       }
+
+       return $found;
+
+   }
 
 }

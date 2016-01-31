@@ -115,7 +115,7 @@ class Basic {
                         $auth = $this->ga->auth->refreshAccessToken($refreshToken);
                         var_dump($auth);
                         $accessToken = $auth['access_token'];
-                        $refreshToken = $auth['refresh_token'];
+                        $refreshToken = (isset($auth['refresh_token']) ? $auth['refresh_token'] : '');
                         $tokenExpires = $auth['expires_in'];
                         $tokenCreated = time();
                         $this->storage->set('auth',$auth);

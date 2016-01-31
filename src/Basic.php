@@ -91,7 +91,8 @@ class Basic {
             }
             return false;
         } else {
-                    var_dump($auth);
+		    if (isset($auth))
+	                    var_dump($auth);
                     $refreshToken = $this->storage->get( 'refreshToken' );
                     $tokenExpires = $this->storage->get( 'tokenExpires' );
                     $tokenCreated = $this->storage->get( 'tokenCreated' );
